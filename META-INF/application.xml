@@ -4,4 +4,10 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd"
              version="6">
 
+    <module id="webshop-Web">
+        <web>
+            <web-uri>webshop.war</web-uri>
+            <context-root>webshop</context-root>
+        </web>
+    </module>
 </application>
