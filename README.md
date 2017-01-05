@@ -1,2 +1,2 @@
 # Webshop
-Java Webshop voor Sogeit
+Java Webshop voor Sogeti
