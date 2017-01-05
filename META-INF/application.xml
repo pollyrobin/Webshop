@@ -4,10 +4,13 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd"
              version="6">
 
-    <module id="webshop-Web">
+    <module id="webshop5-Web">
         <web>
-            <web-uri>webshop.war</web-uri>
-            <context-root>webshop</context-root>
+            <web-uri>web.war</web-uri>
+            <context-root>webshop5Web</context-root>
         </web>
+    </module>
+    <module id="webshop5-EJB">
+        <ejb>ejb.jar</ejb>
     </module>
 </application>

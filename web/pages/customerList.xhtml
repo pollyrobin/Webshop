@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title>customerList</title>
+</head>
+<h:body>
+    <ui:composition template="../templates/template.xhtml">
+        <ui:define name="content">
+            <h:dataTable styleClass="table table-striped table-hover" value="#{customerController.customerList}" var="customer">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Name"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Address"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.address}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="City"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.city}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Postal code"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.postalCode}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Email"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.email}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="username"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.user.username}"/>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Password"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.user.password}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="validated"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.user.validated}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Role"/>
+                    </f:facet>
+                    <h:outputText value="#{customer.user.userRole.userRole}"/>
+                </h:column>
+            </h:dataTable>
+            <h:form>
+                <h:link outcome="newEvent.xhtml" value="Add new Employee"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
