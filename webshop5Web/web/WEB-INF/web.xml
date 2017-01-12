@@ -14,7 +14,7 @@
     </servlet-mapping-->
 
     <welcome-file-list>
-        <welcome-file>home</welcome-file>
+        <welcome-file>index</welcome-file>
     </welcome-file-list>
 
     <!--
@@ -54,13 +54,20 @@
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/WEB-INF/errorpages/expired.xhtml</location>
     </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/errorpages/404.xhtml</location>
+    </error-page>
     <error-page>
         <error-code>500</error-code>
         <location>/WEB-INF/errorpages/500.xhtml</location>
     </error-page>
 
+
     <context-param>
-        <param-name>facelets.SKIP_COMMENTS</param-name>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <!--<param-name>facelets.SKIP_COMMENTS</param-name>-->
         <param-value>true</param-value>
     </context-param>
     <context-param>

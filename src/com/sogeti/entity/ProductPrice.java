@@ -11,7 +11,8 @@ public class ProductPrice {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "price")
+    //@Column(name = "price", scale=2, precision = 2)
+    @Column(name = "price", columnDefinition="Decimal(10,2)")
     private double price;
 
     @Column(name = "currency")
@@ -21,6 +22,22 @@ public class ProductPrice {
 
     public ProductPrice(double price, String currency) {
         this.price = price;
+        this.currency = currency;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 }

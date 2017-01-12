@@ -5,38 +5,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
 <head>
     <title>eventList</title>
 </head>
 <h:body>
-    <ui:composition template="../templates/template.xhtml">
+    <ui:composition template="templates/template.xhtml">
         <ui:define name="content">
             <h:dataTable styleClass="table table-striped table-hover" value="#{productController.productList}" var="product">
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Name"/>
+                        <h:outputText value="Naam"/>
                     </f:facet>
                     <h:outputText value="#{product.name}"/>
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Description"/>
+                        <h:outputText value="Omschrijving"/>
                     </f:facet>
                     <h:outputText value="#{product.description}"/>
                 </h:column>
-                <!--<h:column>-->
-                    <!--<f:facet name="header">-->
-                        <!--<h:outputText value="Image"/>-->
-                    <!--</f:facet>-->
-                    <!--<h:outputText value="#{product.image}"/>-->
-                <!--</h:column>-->
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Prijs"/>
+                    </f:facet>
+                    <h:outputText value="#{product.productPrice.price}">
+                        <f:convertNumber pattern="¤#,##0.00" currencySymbol="€" />
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Toevoegen"/>
+                    </f:facet>
+                    <h:form>
+                        <button class="btn btn-primary" type="submit" jsf:action="#{shoppingCartController.addProduct(product, 1)}">
+                            <span class="glyphicon glyphicon-shopping-cart"/>
+                        </button>
+                    </h:form>
+                </h:column>
             </h:dataTable>
             <!--<h:form>-->
                 <!--<h:link outcome="newEvent.xhtml" value="Add new Employee"/>-->
             <!--</h:form>-->
-            Neem contact op met ons als u een bestelling wilt plaatsen.
         </ui:define>
     </ui:composition>
 </h:body>

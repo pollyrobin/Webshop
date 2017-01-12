@@ -1,4 +1,7 @@
-package com.sogeti.entity;
+package com.sogeti.webshop;
+
+import com.sogeti.entity.Category;
+import com.sogeti.entity.CategoryEJB;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;

@@ -3,9 +3,9 @@ package com.sogeti.entity;
 import sun.swing.BakedArrayList;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Currency;
 
 /**
  * Created by rowagema on 4-1-2017.
@@ -15,7 +15,6 @@ import java.util.Currency;
 @Table(name = "product")
 @NamedQuery(name = "findAllProducts", query = "SELECT p FROM Product p")
 public class Product {
-
     @Id
     @GeneratedValue
     @Column(name = "id")
@@ -31,7 +30,8 @@ public class Product {
     @Column(name = "image")
     private String image;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @NotNull
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<ProductPrice> prices = new ArrayList<>();
 
     public String getName() {
@@ -60,5 +60,29 @@ public class Product {
 
     public void addProductPrice(ProductPrice pp) {
         this.prices.add(pp);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setPrices(Collection<ProductPrice> prices) {
+        this.prices = prices;
+    }
+
+    public ProductPrice getProductPrice() {
+        Collection<ProductPrice> prices = getPrices();
+
+        return prices.iterator().next();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Product product = (Product) obj;
+        return product.getId() == id;
     }
 }

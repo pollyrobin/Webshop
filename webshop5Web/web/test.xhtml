@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:body>
+    <ui:composition template="templates/template.xhtml">
+        <ui:define name="content">
+            #{productController.prefillProducts()}
+            <h:outputText value=""/>
+            <!--<h:form>-->
+                <!--<h:commandButton value="Count" action="#{productController.prefillProducts}"/>-->
+            <!--</h:form>-->
+            <!--<h:form>-->
+                <!--<h:commandButton value="Count" action="#{categoryController.prefillCategories()}"/>-->
+            <!--</h:form>-->
+            <!--#{categoryController.prefillCategories()}-->
+            <!--#{productController.prefillProducts()}-->
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

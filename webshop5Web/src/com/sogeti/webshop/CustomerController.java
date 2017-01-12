@@ -1,4 +1,9 @@
-package com.sogeti.entity;
+package com.sogeti.webshop;
+
+import com.sogeti.entity.Customer;
+import com.sogeti.entity.CustomerEJB;
+import com.sogeti.entity.User;
+import com.sogeti.entity.UserRole;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;

@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<body>
+
+        <p>
+            This page resides in the <code>/WEB-INF/faces-views</code> folder as
+            <code>viewsdemo.xhtml</code>
+            and has been automatically scanned by FacesViews. It can be requested with both its
+            original extension (<code>viewsdemo.xhtml</code>) as well as without its extension
+            (<code>viewsdemo</code>). When <a href="#{request.contextPath}/viewsdemo.xhtml">requesting with an extension</a>
+            a redirect will take place to its extensionless variant.
+        </p>
+        <p>
+            To demo that extensionless URLs can be used in combination with other URL rewriters (like the CDI conversation
+            scope), the PostRedirectGet variant starts a conversation. When going back and forth between the demo pages with
+            PRG, the created time should stay the same after the first navigation.
+        </p>
+
+        <p>
+            Bean created at: #{postRedirectBean.date}
+        </p>
+
+        <p>
+            <h:link value="Link to other FacesViews scanned page" outcome="second" />
+        </p>
+
+        <p>
+            Command button that invokes an action and afterwards redirects to the "second" page:
+        </p>
+
+        <h:form id="form">
+            <h:commandButton value="PostRedirectGet to other FacesViews page with conversation" action="#{postRedirectBean.toSecond}" />
+        </h:form>
+
+        <hr />
+
+        <p>
+            <h:link value="Back to entry demo page" outcome="/facesviews/ExtensionlessURLs" />
+        </p>
+</body>
+</html>

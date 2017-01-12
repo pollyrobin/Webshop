@@ -6,8 +6,9 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="none"/>-->
         </properties>
     </persistence-unit>
 </persistence>
