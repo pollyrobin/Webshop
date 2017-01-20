@@ -44,7 +44,6 @@ public class CustomerController {
         c1.setEmail("testemail");
         c1.setPostalCode("testpostcode");
         User u = new User();
-        u.setUsername("testuser");
         u.setPassword("fakepass");
         u.setValidated(false);
         c1.setUser(u);
@@ -65,7 +64,6 @@ public class CustomerController {
         c3.setEmail("testemail3");
         c3.setPostalCode("testpostcode");
         User u1 = new User(UserRole.UserRoleEnum.ADMIN);
-        u1.setUsername("testadmin");
         u1.setPassword("another fake pass");
         u1.setValidated(true);
         c3.setUser(u1);

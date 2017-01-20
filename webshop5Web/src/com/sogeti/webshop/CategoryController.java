@@ -24,8 +24,6 @@ public class CategoryController {
 
     public List<Category> getParentCategories() {
         parentCategories = categoryEJB.findParentCategories();
-        for (Category c: parentCategories) {
-        }
         return parentCategories;
     }
 

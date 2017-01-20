@@ -4,11 +4,13 @@ import com.sogeti.entity.*;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +19,9 @@ import java.util.logging.Logger;
 /**
  * Created by ROWAGEMA on 29-12-2016.
  */
-@ManagedBean(name = "productController", eager = true)
-@RequestScoped
-public class ProductController {
-    private static final Logger LOG = Logger.getLogger(ProductController.class.getName());
+@Named
+@SessionScoped
+public class ProductController implements Serializable {
     @EJB
     private ProductEJB productEJB;
     @EJB
@@ -29,7 +30,6 @@ public class ProductController {
     private Product product = new Product();
     private List<Product> productList = new ArrayList<>();
 
-    //@ManagedProperty(value="#{category}")
     private Category category;
 
     public List<Product> getProductList() {

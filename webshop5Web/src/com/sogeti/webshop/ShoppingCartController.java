@@ -27,7 +27,7 @@ public class ShoppingCartController implements Serializable {
 
     public String addProduct(Product product, int amount) {
         shoppingCart.addProduct(product, amount);
-        return "index";
+        return "#";
     }
 
     public String changeProductAmount(Product product, int amount) {

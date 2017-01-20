@@ -38,7 +38,7 @@ public class OrderCartController implements Serializable {
         order = orderEJB.addNew(order);
     }
 
-    public String Order(CustomerController customerController) {
+    public String order(CustomerController customerController) {
         Customer customer = customerController.getCustomer();
         Order order = shoppingCartController.getOrder();
 

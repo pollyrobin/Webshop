@@ -1,28 +1,25 @@
 package com.sogeti.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 /**
  * Created by ROWAGEMA on 3-1-2017.
  */
 @Entity
-@Table( name = "user", uniqueConstraints= @UniqueConstraint(columnNames = {"username"} ))
+@Table( name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue(generator="increment")
-//    @GenericGenerator(name="increment", strategy = "increment")
     @Column(name = "id")
     private int id;
 
-    @Column(name = "username")
-    private String username;
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "salt")
+    private byte[] salt;
 
     @Column(name = "validated")
     private boolean validated;
@@ -31,19 +28,12 @@ public class User {
     private UserRole userRole;
 
     public User() {
+        this.validated = false;
         this.userRole = new UserRole();
     }
 
     public User(UserRole.UserRoleEnum ure) {
         this.userRole = new UserRole(ure);
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -65,4 +55,8 @@ public class User {
     public UserRole getUserRole() { return userRole; }
 
     public void setUserRole(UserRole userRole) { this.userRole = userRole; }
+
+    public byte[] getSalt() { return salt; }
+
+    public void setSalt(byte[] salt) { this.salt = salt; }
 }
