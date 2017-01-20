@@ -1,18 +1,22 @@
 package com.sogeti.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by ROWAGEMA on 14-12-2016.
  */
+
 @Entity
 @Table( name = "customer", uniqueConstraints= @UniqueConstraint(columnNames = {"email"} ))
 @NamedQuery(name = "findAllCustomers", query = "SELECT c FROM Customer c")
 public class Customer {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.TABLE)
     @Column(name = "id")
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -31,6 +35,9 @@ public class Customer {
 
     @OneToOne(cascade=CascadeType.ALL)
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Order> orders = new ArrayList<>();
 
     public Customer() {}
     public Customer(String name) {
@@ -83,5 +90,13 @@ public class Customer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Collection<Order> getOrders() { return orders; }
+
+    public void setOrders(Collection<Order> orders) { this.orders = orders; }
+
+    public void addOrder(Order order) {
+        orders.add(order);
     }
 }

@@ -1,7 +1,5 @@
 package com.sogeti.entity;
 
-import sun.swing.BakedArrayList;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -13,12 +11,17 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "product")
-@NamedQuery(name = "findAllProducts", query = "SELECT p FROM Product p")
+
+@NamedQueries({
+    @NamedQuery(name = "findAllProducts", query = "SELECT p FROM Product p"),
+    @NamedQuery(name = "findAllProductsByCategory", query = "SELECT distinct p FROM Product p join p.categories c where c.name = :name")
+})
 public class Product {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -33,6 +36,10 @@ public class Product {
     @NotNull
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<ProductPrice> prices = new ArrayList<>();
+
+    @NotNull
+    @ManyToMany()
+    private Collection<Category> categories = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -62,11 +69,19 @@ public class Product {
         this.prices.add(pp);
     }
 
+    public Collection<Category> getCategories() {
+        return categories;
+    }
+
+    public void addCategory(Category c) {
+        this.categories.add(c);
+    }
+
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

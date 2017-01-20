@@ -12,9 +12,9 @@ import javax.persistence.*;
 @Table( name = "user_role")
 public class UserRole {
     @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
-    private long id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
     public enum UserRoleEnum {
         CUSTOMER,

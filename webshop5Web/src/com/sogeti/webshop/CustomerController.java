@@ -31,10 +31,8 @@ public class CustomerController {
         return "customerList.xhtml";
     }
 
-    public String addNewCustomer() {
-        customer = customerEJB.addNew(customer);
-        customerList = customerEJB.findCustomers();
-        return "customerList.xhtml";
+    public void addCustomer(Customer cs) {
+        customer = customerEJB.addNew(cs);
     }
 
     public String prefillCustomers() {

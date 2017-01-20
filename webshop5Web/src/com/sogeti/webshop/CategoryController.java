@@ -8,6 +8,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by ROWAGEMA on 14-12-2016.
@@ -18,16 +19,19 @@ public class CategoryController {
     @EJB
     private CategoryEJB categoryEJB;
     private Category category = new Category();
-    private List<Category> categoryList = new ArrayList<>();
+    private List<Category> parentCategories = new ArrayList<>();
+    private List<Category> subCategories = new ArrayList<>();
 
-    public List<Category> getParentCategoryList() {
-        categoryList = categoryEJB.findParentCategories();
-        return categoryList;
+    public List<Category> getParentCategories() {
+        parentCategories = categoryEJB.findParentCategories();
+        for (Category c: parentCategories) {
+        }
+        return parentCategories;
     }
 
-    public List<Category> getSubCategoryList(long parentId) {
-        categoryList = categoryEJB.findSubCategories(parentId);
-        return categoryList;
+    public List<Category> getSubCategories(long parentId) {
+        subCategories = categoryEJB.findSubCategories(parentId);
+        return subCategories;
     }
 
     public String viewCategory(){
@@ -36,7 +40,7 @@ public class CategoryController {
 
     public String addNewCategory() {
         category = categoryEJB.addNew(category);
-        categoryList = categoryEJB.findParentCategories();
+        parentCategories = categoryEJB.findParentCategories();
         return "categoryList.xhtml";
     }
 

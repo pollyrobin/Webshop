@@ -6,11 +6,10 @@ import com.sogeti.entity.Product;
 import com.sogeti.entity.ShoppingCart;
 
 import javax.ejb.EJB;
-import javax.faces.bean.*;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Collection;
-
+import javax.enterprise.context.SessionScoped;
 /**
  * Created by rowagema on 9-1-2017.
  */
@@ -28,11 +27,19 @@ public class ShoppingCartController implements Serializable {
 
     public String addProduct(Product product, int amount) {
         shoppingCart.addProduct(product, amount);
+        return "index";
+    }
+
+    public String changeProductAmount(Product product, int amount) {
+        shoppingCart.addProduct(product, amount);
         return "shoppingCart";
     }
 
     public Order getOrder() {
         return shoppingCart.getOrder();
+    }
+    public void clearOrder() {
+        shoppingCart.setOrder(new Order());
     }
 
     public Collection<OrderLine> getOrderLines() {

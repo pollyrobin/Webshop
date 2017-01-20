@@ -9,10 +9,10 @@ import javax.persistence.*;
 public class OrderLine {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
     private Product product;
 
     @Column(name = "amount")

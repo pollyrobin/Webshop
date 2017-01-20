@@ -8,16 +8,19 @@ import java.util.*;
  */
 
 @Entity
-@Table( name = "order")
+@Table(name = "orders")
 @NamedQuery(name = "findAllOrders", query = "SELECT o FROM Order o")
 public class Order {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private int id;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @Column(name = "status")
+    private String status;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<OrderLine> orderLines = new ArrayList<>();
 
     public Collection<OrderLine> getOrderLines() {

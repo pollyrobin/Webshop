@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 public class ProductPrice {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     //@Column(name = "price", scale=2, precision = 2)
     @Column(name = "price", columnDefinition="Decimal(10,2)")

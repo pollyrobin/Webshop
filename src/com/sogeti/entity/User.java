@@ -12,9 +12,11 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(generator="increment")
+//    @GenericGenerator(name="increment", strategy = "increment")
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "username")
     private String username;

@@ -8,14 +8,14 @@ import javax.persistence.*;
 @Entity
 @Table( name = "category", uniqueConstraints= @UniqueConstraint(columnNames = {"name", "parent_id"} ))
 @NamedQueries({
-    @NamedQuery(name = "findAllParentCategories", query = "SELECT c FROM Category c WHERE c.parentId = null"),
+    @NamedQuery(name = "findAllParentCategories", query = "SELECT c FROM Category c WHERE c.parentId = 0"),
     @NamedQuery(name = "findAllSubCategories", query = "SELECT c FROM Category c WHERE c.parentId = :parentId")})
 public class Category {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;

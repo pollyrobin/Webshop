@@ -1,30 +1,51 @@
 package com.sogeti.webshop;
 
-import com.sogeti.entity.ShoppingCart;
+import com.sogeti.entity.Customer;
+import com.sogeti.entity.Order;
+import com.sogeti.entity.OrderEJB;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import java.util.logging.Logger;
+import java.io.Serializable;
 
 /**
  * Created by rowagema on 12-1-2017.
  */
 @Named
 @RequestScoped
-public class OrderCartController {
-    private static final Logger LOG = Logger.getLogger(OrderCartController.class.getName());
+public class OrderCartController implements Serializable {
 
-    ShoppingCart shoppingCart;
+    @EJB
+    private OrderEJB orderEJB;
+    private Customer customer = new Customer();
+    private ShoppingCartController shoppingCartController;
 
-    public OrderCartController() { }
-
-    public String getTest() {
+    public OrderCartController() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        ShoppingCartController cart
+        shoppingCartController
                 = (ShoppingCartController) facesContext.getApplication()
                 .createValueBinding("#{shoppingCartController}").getValue(facesContext);
-        LOG.info("" + cart.getOrderTotal());
+    }
+
+    public String getTest() {
         return "orderCart";
+    }
+
+    public void addOrder(Order order) {
+        order = orderEJB.addNew(order);
+    }
+
+    public String Order(CustomerController customerController) {
+        Customer customer = customerController.getCustomer();
+        Order order = shoppingCartController.getOrder();
+
+        customer.addOrder(order);
+        shoppingCartController.clearOrder();
+        customerController.addCustomer(customer);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, " ", "Bedankt voor het plaatsen van de bestelling"));
+        return "index";
     }
 }

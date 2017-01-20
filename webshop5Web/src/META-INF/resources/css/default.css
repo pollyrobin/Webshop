@@ -1,10 +1,28 @@
-/*body {*/
-/*}*/
-
 .main_row {
     padding-top: 50px;
 }
 
 .main_content {
     margin-top: 15px;
+}
+
+.sidebar {
+    margin-top: 15px;
+}
+
+.sidebar > ul {
+    list-style-type: none;
+}
+.sidebar > ul > li {
+    margin: 10px;
+}
+
+.validate-message {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px !important;
+}
+
+#messages > li {
+    list-style-type: none;
 }

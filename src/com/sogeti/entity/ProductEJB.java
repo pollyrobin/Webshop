@@ -19,6 +19,13 @@ public class ProductEJB {
         return query.getResultList();
     }
 
+    public List<Product> findProductsByCategory(Category c) {
+        TypedQuery<Product> query = em.createNamedQuery("" + "findAllProductsByCategory", Product.class)
+                .setParameter("name", c.getName());
+        return query.getResultList();
+
+    }
+
     public Product addNew(Product product) {
         em.persist(product);
         return product;
