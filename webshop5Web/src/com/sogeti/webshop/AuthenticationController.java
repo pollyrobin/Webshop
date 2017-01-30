@@ -1,19 +1,18 @@
 package com.sogeti.webshop;
 
+import com.sogeti.entity.Authentication;
 import com.sogeti.entity.Customer;
 import com.sogeti.entity.CustomerEJB;
 import com.sogeti.entity.User;
 
 import javax.ejb.EJB;
+import javax.inject.Named;
+import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import java.io.Serializable;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
 import java.util.logging.Logger;
 
 /**
@@ -23,81 +22,76 @@ import java.util.logging.Logger;
 @SessionScoped
 public class AuthenticationController implements Serializable {
     private static final Logger LOG = Logger.getLogger(AuthenticationController.class.getName());
+
+    @EJB
+    private Authentication authentication;
+
     @EJB
     private CustomerEJB customerEJB;
 
     private Customer customer;
 
     public AuthenticationController() {
+        authentication = new Authentication();
         this.customer = new Customer();
         this.customer.setUser(new User());
     }
 
     public CustomerEJB getCustomerEJB() { return customerEJB; }
-
     public void setCustomerEJB(CustomerEJB customerEJB) { this.customerEJB = customerEJB; }
-
     public Customer getCustomer() { return customer; }
-
-    public void setCustomer(Customer customer) { this.customer = customer; }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    public Authentication getAuthentication() { return authentication; }
+    public void setAuthentication(Authentication authentication) { this.authentication = authentication; }
 
     public String register(AuthenticationController c) throws NoSuchAlgorithmException, NoSuchProviderException  {
 
-        String passwordToHash = "password";
-        byte[] salt = getSalt();
-
-        String securePassword = getSecurePassword(passwordToHash, salt);
-
-        //How to verify the hashed password with the new logged in password
-//      String regeneratedPassowrdToVerify = getSecurePassword(passwordToHash, salt);
-
         Customer customer = c.getCustomer();
-        customer.getUser().setPassword(securePassword);
-        customer.getUser().setSalt(salt);
+        customer.getUser().hashPassword();
+        customerEJB.addNew(customer);
+//        this.login(customer);
+        /*this.customer = new Customer();
+        this.customer.setUser(new User());*/
 
-        customerEJB.addNew(c.getCustomer());
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, " ", "Bedankt voor het registreren"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, " ", "Bedankt voor het registreren"));
         return "index";
     }
 
+    public void login(Customer cus) {
+        Customer customer1 = customerEJB.findCustomerByEmail(customer);
+        String message = "Geen gebruiker gevonden met het ingevulde e-mailadres en wachtwoord";
+        if(customer1 != null) {
+            if(customer1.getUser().isPasswordMatch(cus.getUser().getPassword())) {
+                authentication.setCustomer(customer1);
+                authentication.setLoggedIn(true);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, " ", "Succesvol ingelogd"));
 
-    private static String getSecurePassword(String passwordToHash, byte[] salt)
-    {
-        String generatedPassword = null;
-        try {
-            // Create MessageDigest instance for MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            //Add password bytes to digest
-            md.update(salt);
-            //Get the hash's bytes
-            byte[] bytes = md.digest(passwordToHash.getBytes());
-            //This bytes[] has bytes in decimal format;
-            //Convert it to hexadecimal format
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++)
-            {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                CustomerController customerController
+                        = (CustomerController) facesContext.getApplication()
+                        .createValueBinding("#{customerController}").getValue(facesContext);
+                customerController.setCustomer(customer1);
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, " ", message));
             }
-            //Get complete hashed password in hex format
-            generatedPassword = sb.toString();
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, " ", message));
         }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return generatedPassword;
     }
 
-    //Add salt
-    private static byte[] getSalt() throws NoSuchAlgorithmException, NoSuchProviderException
-    {
-        //Always use a SecureRandom generator
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
-        //Create array for salt
-        byte[] salt = new byte[16];
-        //Get a random salt
-        sr.nextBytes(salt);
-        //return salt
-        return salt;
-    }
+    public String logout() {
+        authentication.setCustomer(null);
+        authentication.setLoggedIn(false);
 
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        CustomerController customerController
+                = (CustomerController) facesContext.getApplication()
+                .createValueBinding("#{customerController}").getValue(facesContext);
+        customerController.setCustomer(null);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, " ", "Succesvol uitgelogd"));
+        return "";
+    }
 }

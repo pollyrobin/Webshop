@@ -6,12 +6,14 @@
 <ui:composition>
     <ul>
         <li class="">
-            <h:link value="Alles" action="#{productController.getProductList()}"/>
+            <h:form>
+                <h:commandLink value="Alle producten" action="#{productController.showProducts()}"/>
+            </h:form>
         </li>
     <ui:repeat value="${categoryController.parentCategories}" var="category">
         <li class="">
             <h:form>
-                <h:commandLink value="#{category.name}" action="#{productController.getProductList()}">
+                <h:commandLink value="#{category.name}" action="#{productController.showProducts()}">
                     <f:setPropertyActionListener target="#{productController.category}" value="#{category}" />
                 </h:commandLink>
             </h:form>

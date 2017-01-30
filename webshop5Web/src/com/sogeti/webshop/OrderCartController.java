@@ -45,7 +45,7 @@ public class OrderCartController implements Serializable {
         customer.addOrder(order);
         shoppingCartController.clearOrder();
         customerController.addCustomer(customer);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, " ", "Bedankt voor het plaatsen van de bestelling"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, " ", "Bedankt voor het plaatsen van de bestelling"));
         return "index";
     }
 }

@@ -26,3 +26,7 @@
 #messages > li {
     list-style-type: none;
 }
+
+.btn-user{
+    margin-top: 9px;
+}

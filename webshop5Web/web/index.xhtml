@@ -13,7 +13,13 @@
 <h:body>
     <ui:composition template="templates/template.xhtml">
         <ui:define name="content">
-            <h:messages id="messages" styleClass="alert alert-success validate-message" showDetail="true" autoUpdate="true" closable="true" />
+            <!--<h:messages id="messages" styleClass="alert alert-success validate-message" showDetail="true" autoUpdate="true" closable="true" />-->
+            <h:messages
+                    infoClass="alert validate-message alert-success"
+                    warnClass="alert validate-message alert-info"
+                    errorClass="alert validate-message alert-warning"
+                    fatalClass="alert validate-message alert-danger"
+                    showDetail="true" autoUpdate="true" closable="true" />
 
             <h:dataTable styleClass="table table-striped table-hover" value="#{productController.productList}" var="product">
                 <h:column>

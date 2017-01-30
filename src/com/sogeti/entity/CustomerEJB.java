@@ -2,8 +2,10 @@ package com.sogeti.entity;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -20,7 +22,23 @@ public class CustomerEJB {
     }
 
     public Customer addNew(Customer customer) {
-        em.persist(customer);
+        if (customer.getId() == 0) {
+            em.persist(customer);
+        } else {
+            if (!em.contains(customer)) {
+                em.merge(customer);
+            }
+        }
         return customer;
+    }
+
+    public Customer findCustomerByEmail(Customer customer) {
+        TypedQuery<Customer> query = em.createNamedQuery("findCustomerByEmail", Customer.class)
+            .setParameter("email", customer.getEmail());
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
     }
 }
